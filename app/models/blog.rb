@@ -9,6 +9,14 @@ class Blog < ApplicationRecord
 
   scope :published, -> { where('secret = FALSE') }
 
+  scope :available_to, lambda { |user|
+    if user
+      published.or(where(user_id: user.id))
+    else
+      published
+    end
+  }
+
   scope :search, lambda { |term|
     where('title LIKE ? OR content LIKE ?', "%#{term}%", "%#{term}%")
   }
