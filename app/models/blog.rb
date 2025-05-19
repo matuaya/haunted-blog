@@ -11,7 +11,7 @@ class Blog < ApplicationRecord
 
   scope :published_or_owned_by, lambda { |user|
     if user
-      published.or(where(user_id: user))
+      published.or(where(user:))
     else
       published
     end
